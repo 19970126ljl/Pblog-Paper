@@ -105,15 +105,15 @@
 
 **<center><font size=2>表 3.1 用户表</font></center>**
 
-|name|type|description|
-|:----:|:----:|:----:|
-|id|VARCHAR(100) NOT NULL|PRIMARY KEY|
-|pwd|VARCHAR(100) NOT NULL|密码|
-|name|VARCHAR(100) NOT NULL|用户名|
-|head|VARCHAR(100) NOT NULL|头像地址|
-|types|INT|是否为管理员|
-|gender|INT|性别|
-|friend|INT|（外键）好友|
+|  name  |         type          | description  |
+| :----: | :-------------------: | :----------: |
+|   id   | VARCHAR(100) NOT NULL | PRIMARY KEY  |
+|  pwd   | VARCHAR(100) NOT NULL |     密码     |
+|  name  | VARCHAR(100) NOT NULL |    用户名    |
+|  head  | VARCHAR(100) NOT NULL |   头像地址   |
+| types  |          INT          | 是否为管理员 |
+| gender |          INT          |     性别     |
+| friend |          INT          | （外键）好友 |
 
 &emsp;&emsp;用户的id作为主键，这是系统自动生成的并且自增不会重复。这保证了所有用户的唯一性。在进行登陆注册时需验证账号存在且密码相匹配才能登陆成功否则登陆失败，管理员的登陆时出来检查账号密码还要检查类型是否为管理员，只有当类型为管理员账号密码类型都正确时才登陆成功，否则登陆失败，head用来记录用户的头像信息，gender用来记录用户的性别信息，friend用来记录用户的好友信息。
 
@@ -121,15 +121,15 @@
 
 **<center><font size=2>表 3.2 文章表</font></center>**
 
-|name|type|description|
-|:----:|:----:|:----:|
-|id|VARCHAR(100) NOT NULL|PRIMARY KEY|
-|title|VARCHAR(100) NOT NULL|文章标题|
-|content|VARCHAR(100) NOT NULL|文章内容|
-|writerid|VARCHAR(100) NOT NULL|（外键）作者id|
-|ctime|date|文章创建时间|
-|photo|VARCHAR(100)|图片地址|
-|audit|boolean|文章是否通过审核|
+|   name   |         type          |   description    |
+| :------: | :-------------------: | :--------------: |
+|    id    | VARCHAR(100) NOT NULL |   PRIMARY KEY    |
+|  title   | VARCHAR(100) NOT NULL |     文章标题     |
+| content  | VARCHAR(100) NOT NULL |     文章内容     |
+| writerid | VARCHAR(100) NOT NULL |  （外键）作者id  |
+|  ctime   |         date          |   文章创建时间   |
+|  photo   |     VARCHAR(100)      |     图片地址     |
+|  audit   |        boolean        | 文章是否通过审核 |
 
 &emsp;&emsp;文章的id作为主键，这是系统自动生成的并且自增不会重复。这保证了所有文章的唯一性。在文章表中title用来记录文章的标题不能为空，content用来记录文章的内容，不能为空。writerid是外键，用来记录文章的作者，ctime用来记录文章的创建时间，photo用来记录文章的图片地址，audit用来记录文章是否通过审核。
 
@@ -137,13 +137,13 @@
 
 **<center><font size=2>表 3.3 相册表</font></center>**
 
-|name|type|description|
-|:----:|:----:|:----:|
-|id|VARCHAR(100) NOT NULL|PRIMARY KEY|
-|title|VARCHAR(100) NOT NULL|相册标题|
-|userid|VARCHAR(100) NOT NULL|（外键）相册拥有者的id|
-|ctime|date|相册创建时间|
-|cover|VARCHAR(100)|相册封面地址|
+|  name  |         type          |      description       |
+| :----: | :-------------------: | :--------------------: |
+|   id   | VARCHAR(100) NOT NULL |      PRIMARY KEY       |
+| title  | VARCHAR(100) NOT NULL |        相册标题        |
+| userid | VARCHAR(100) NOT NULL | （外键）相册拥有者的id |
+| ctime  |         date          |      相册创建时间      |
+| cover  |     VARCHAR(100)      |      相册封面地址      |
 
 &emsp;&emsp;相册的id作为主键，这是系统自动生成的并且自增不会重复。这保证了所有相册的唯一性。在相册表中title用来记录相册的标题不能为空，userid是外键，用来记录相册的作者，ctime用来记录相册的创建时间。
 
@@ -151,15 +151,15 @@
 
 **<center><font size=2>表 3.4 图片表</font></center>**
 
-|name|type|description|
-|:----:|:----:|:----:|
-|id|VARCHAR(100) NOT NULL|PRIMARY KEY|
-|title|VARCHAR(100) NOT NULL|图片标题|
-|userid|VARCHAR(100) NOT NULL|（外键）图片拥有者的id|
-|albumid|VARCHAR(100) NOT NULL|（外键）相册的id|
-|articleid|VARCHAR(100) NOT NULL|（外键）文章的id|
-|ctime|date|图片创建时间|
-|pic|VARCHAR(100)|图片地址|
+|   name    |         type          |      description       |
+| :-------: | :-------------------: | :--------------------: |
+|    id     | VARCHAR(100) NOT NULL |      PRIMARY KEY       |
+|   title   | VARCHAR(100) NOT NULL |        图片标题        |
+|  userid   | VARCHAR(100) NOT NULL | （外键）图片拥有者的id |
+|  albumid  | VARCHAR(100) NOT NULL |    （外键）相册的id    |
+| articleid | VARCHAR(100) NOT NULL |    （外键）文章的id    |
+|   ctime   |         date          |      图片创建时间      |
+|    pic    |     VARCHAR(100)      |        图片地址        |
 
 &emsp;&emsp;图片的id作为主键，这是系统自动生成的并且自增不会重复。这保证了所有图片的唯一性。在图片表中title用来记录图片的标题不能为空，userid是外键，用来记录图片的作者，ctime用来记录图片的创建时间，albumid是外键用来记录该图片是属于哪个相册，articleid是外键，用来记录图片是属于哪个文章，pic记录图片的地址。
 
@@ -167,13 +167,13 @@
 
 **<center><font size=2>表 3.5 评论表</font></center>**
 
-|name|type|description|
-|:----:|:----:|:----:|
-|id|VARCHAR(100) NOT NULL|PRIMARY KEY|
-|userid|VARCHAR(100) NOT NULL|（外键）评论者的id|
-|articleid|VARCHAR(100) NOT NULL|（外键）评论的文章的id|
-|content|VARCHAR(100) NOT NULL|评论的内容|
-|ctime|date|评论的创建时间|
+|   name    |         type          |      description       |
+| :-------: | :-------------------: | :--------------------: |
+|    id     | VARCHAR(100) NOT NULL |      PRIMARY KEY       |
+|  userid   | VARCHAR(100) NOT NULL |   （外键）评论者的id   |
+| articleid | VARCHAR(100) NOT NULL | （外键）评论的文章的id |
+|  content  | VARCHAR(100) NOT NULL |       评论的内容       |
+|   ctime   |         date          |     评论的创建时间     |
 
 &emsp;&emsp;评论的id作为主键，这是系统自动生成的并且自增不会重复。这保证了所有评论的唯一性。在评论表中content用来记录评论的内容不能为空，userid是外键，用来记录评论的作者，ctime用来记录评论的创建时间，articleid是外键用来记录该评论是属于哪个文章。
 
@@ -181,18 +181,21 @@
 
 **<center><font size=2>表 3.6 动态表</font></center>**
 
-|name|type|description|
-|:----:|:----:|:----:|
-|id|VARCHAR(100) NOT NULL|PRIMARY KEY|
-|userid|VARCHAR(100) NOT NULL|（外键）动态发布者的id|
-|articleid|VARCHAR(100) NOT NULL|（外键）动态的文章的id|
-|albumid|VARCHAR(100) NOT NULL|（外键）动态的相册的id|
-|photoid|VARCHAR(100) NOT NULL|（外键）动态的图片的id|
-|ctime|date|动态的创建时间|
+|   name    |         type          |      description       |
+| :-------: | :-------------------: | :--------------------: |
+|    id     | VARCHAR(100) NOT NULL |      PRIMARY KEY       |
+|  userid   | VARCHAR(100) NOT NULL | （外键）动态发布者的id |
+| articleid | VARCHAR(100) NOT NULL | （外键）动态的文章的id |
+|  albumid  | VARCHAR(100) NOT NULL | （外键）动态的相册的id |
+|  photoid  | VARCHAR(100) NOT NULL | （外键）动态的图片的id |
+|   ctime   |         date          |     动态的创建时间     |
 
 &emsp;&emsp;动态的id作为主键，这是系统自动生成的并且自增不会重复。这保证了所有动态的唯一性。在动态表中，userid是外键，用来记录动态的作者，ctime用来记录动态的创建时间，articleid是外键用来记录该动态是属于哪个文章。albumid是外键用来记录该动态是属于哪个相册。photoid是外键用来记录该动态是属于哪个相册。
 
 &emsp;&emsp;以上就是整个系统所用到的全部的六张表，各个表之间相互联系，相互牵制，更加灵活的在实际使用中管理整个网站的数据。
+
+
+# <center>第 4 章网站功能模块的详细设计与开发</center>
 
 
 
