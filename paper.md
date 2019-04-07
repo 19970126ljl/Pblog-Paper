@@ -199,7 +199,7 @@
 
 ## **4.1** 普通用户功能模块介绍
 
-&emsp;&emsp;普通用户功能模块主要是普通用户的客户端操作界面，主要由一下六大部分组成，分别是用户登陆注册模块，搜索和分类筛选模块，文章功能模块，留言功能模块，相册图片模块和聊天模块。
+&emsp;&emsp;普通用户功能模块主要是普通用户的客户端操作界面，主要由一下五大部分组成，分别是用户登陆注册模块，搜索和分类筛选模块，文章功能模块，相册图片模块和聊天模块。
 
 ### **4.1.1** 用户登陆注册模块
 
@@ -264,5 +264,83 @@ result={'users':users,'articles':articles}
 
 **<center><font size=2>图 4.4 我的文章编辑界面图</font></center>**
 
+### **4.1.4** 相册图片模块
+
+&emsp;&emsp;用户进入个人中心我的相册模块界面后，可以浏览已经创建的所有相册，并且可以创建新的相册，编辑相册和删除相册。点击进入相册后可以浏览该相册的所有图片，并且可以创建新的图片，编辑图片和删除图片，点击图片后可以查看图片的详细信息。我的相册界面如下图4.5所示。相册内图片的界面如下图4.6所示。
+
+![avatar](/photo/相册界面（4.5）.png)
+
+**<center><font size=2>图 4.5 相册界面图</font></center>**
+
+![avatar](/photo/相册图片模块界面（4.6）.png)
+
+**<center><font size=2>图 4.6 相册图片模块界面图</font></center>**
+
+### **4.1.5** 聊天模块
+
+&emsp;&emsp;用户点击网站上其他用户后进入聊天界面，可以发送信息给其他用户，同时可以接受其他用户的信息，使用了Django-channels插件弥补了Django不支持websocket的缺陷。
+
+## **4.2** 管理员功能模块介绍
+
+&emsp;&emsp;管理员功能模块主要负责管理员身份的用户在系统中对用户文章等信息进行管理，同时也是为了保证整个网站有序的运行保证用户个人信息的安全以及保证网站内容的优质与健康。管理员功能模块主要时使得管理员能够方便的登入管理员界面，更好的管理文章与用户信息。英雌管理员功能模块主要有四大部分，分别是
+
+### **4.2.1** 管理员登陆模块
+
+&emsp;&emsp;管理员登陆时要在管理员界面勾选管理员这个选项，若用户的类型为管理员则登陆成功，进入管理员界面，若不勾选管理员选项则默认进入普通用户界面。若用户类型为普通用户，则同样进入普通用户界面。
+
+### **4.2.2** 管理员搜索模块
+
+&emsp;&emsp;管理员登陆后在主页搜索框内输入所要查询的文章的关键词，点击搜索后跳转的搜索页面查看搜索结果，或者直接点击搜索按钮进入搜索页面，在搜索页面中可以对文章，用户以及进行分类搜索筛选。后端代码中主要引用模块和主要语句和普通用户的搜索类似。
+
+### **4.2.3** 文章管理模块
+
+&emsp;&emsp;管理员对搜索得到的文章或者直接查看到文章列表中的文章进行管理，文章管理界面有所有文章列表，每一条项目都有标识审核通过与不通过。这方便管理对文章进行审核。文章管理模块界面如下图4.7所示。点击进入选定的文章后可以对文章进行审核。管理员可以选择未通过的文章通过，也可以将已通过的文章的内容更改为未通过。文章审核界面如下图4.8所示。后端中主要的引用模块和主要调用的代码如下：  
+if request.method == 'POST':  
+&emsp;&emsp;article = MARTICLE.objects.get(id = article_id)  
+&emsp;&emsp;article.audit = True  
+&emsp;&emsp;article.save()  
+article = MARTICLE.objects.get(id = article_id)  
+comments = MCOMMENT.objects.filter(article = article)  
+content = {'article':article,'comments':comments}  
+return render(request,'pblog/adminarticle.html',content)  
+
+![avatar](/photo/文章管理模块界面（4.7）.png)
+
+**<center><font size=2>图 4.7 文章管理模块界面图</font></center>**
+
+![avatar](/photo/文章审核界面（4.8）.png)
+
+**<center><font size=2>图 4.8 文章审核界面图</font></center>**
+
+### **4.2.4** 用户管理模块
+
+&emsp;&emsp;管理员对搜索得到的用户或者直接查看到用户列表中的用户进行管理，用户管理界面有所有用户列表，这方便管理对用户进行审核。用户管理模块界面如下图4.9所示。点击进入选定的用户后可以对用户进行管理。管理员可以修改用户的资料，也可以将已通过的普通用户设置为管理员，但是管理员不能查看用户的铭文密码，这是为了保护用户的个人隐私。用户管理界面如下图4.9所示。后端中主要的引用模块和主要调用的代码如下：  
+
+if request.method == 'POST':  
+&emsp;&emsp;user=User.objects.get(id=user_id)  
+&emsp;&emsp;form=infoform(request.POST,instance=user)  
+&emsp;&emsp;print(user.muser.head)  
+&emsp;&emsp;if form.is_valid():  
+&emsp;&emsp;&emsp;&emsp;form.save()  
+&emsp;&emsp;&emsp;&emsp;if request.POST['gender'] == 'male':  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;user.muser.gender=True  
+&emsp;&emsp;&emsp;&emsp;else:  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;user.muser.gender=False  
+&emsp;&emsp;&emsp;&emsp;user.muser.save()  
+&emsp;&emsp;&emsp;&emsp;if request.FILES.get('head'):  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;name=user.muser.head  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;print(settings.MEDIA_ROOT+'/'+str(name))  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;f=request.FILES.get('head')  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;fname = settings.MEDIA_ROOT+'/'+str(name)  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;with open(fname,'wb+') as pic:  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;for c in f.chunks():  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;pic.write(c)  
+&emsp;&emsp;return redirect('pblog:adminuserinfo',user_id)     
+user=MUSER.objects.get(id=user_id)  
+return render(request,'pblog/adminuserinfo.html',{'muser':user})  
+
+![avatar](/photo/用户管理界面（4.9）.png)
+
+**<center><font size=2>图 4.9 用户管理界面图</font></center>**
 
 
