@@ -205,7 +205,7 @@
 
 &emsp;&emsp;登陆注册功能是一个确保用户体验和保证用户个人信息隐私安全的基础模块。网站中有登陆界面和注册界面来引导用户进行登陆和注册。
 
-&emsp;&emsp;本网站的用户是扩展了django.contrib.auth.models中原有的用户User模型，注册时使用的表单也是调用了django.contrib.auth.forms中的UserCreationForm的表单对象。用户输入的信息正确与否都由后端Django的库函数regform.is_valid()进行判断。后端代码中主要引用模块和主要调用语句如下：
+&emsp;&emsp;本网站的用户是扩展了django.contrib.auth.models中原有的用户User模型，注册时使用的表单也是调用了django.contrib.auth.forms中的UserCreationForm的表单对象。用户输入的信息正确与否都由后端Django的库函数regform.is_valid()进行判断。当输入注册信息不合法时会有相应的提示。如图4.1所示。后端代码中主要引用模块和主要调用语句如下：
 
 from django.contrib.auth.models import User
 
@@ -226,4 +226,43 @@ def mregister(request):
 &emsp;&emsp;content = {'regform':regform}  
 &emsp;&emsp;return render(request,'pblog/register.html',content)   
 
-&emsp;&emsp;登陆时根据传到后端的用户输入的用户名和密码，调用Django的django.contrib.auth模块中的函数authenticate来验证用户是否存在，该函数返回一个user对象user = authenticate(request,username=request.POST['username'],password=request.POST['password'])
+&emsp;&emsp;登陆时根据传到后端的用户输入的用户名和密码，调用Django的django.contrib.auth模块中的函数authenticate来验证用户是否存在，该函数返回一个user对象，user = authenticate(request,username=request.POST['username'],password=request.POST['password'])，如何user为空，那么说明登陆失败，否则登陆成功。用户在未登录时不能查看文章的详细信息，点击文章后会跳转到登陆界面，登陆拦截功能调用Django的django.contrib.auth.decorators中的login_required函数。@login_required(login_url='pblog:login')改修饰函数能够将为登陆的请求重新定位到登陆界面，登陆界面如下图4.2所示。
+
+![avatar](/photo/注册模块界面（4.1）.png)
+
+**<center><font size=2>图 4.1 注册模块界面图</font></center>**
+
+![avatar](/photo/登陆模块界面（4.2）.png)
+
+**<center><font size=2>图 4.2 登陆模块界面图</font></center>**
+
+### **4.1.2** 搜索和分类筛选模块
+
+&emsp;&emsp;用户登陆后在主页导航栏搜索框内输入所要查询的文章的关键词，点击搜索后跳转的搜索页面查看搜索结果，或者直接点击搜索按钮进入搜索页面，在搜索页面中可以对文章，用户以及动态进行分类搜索筛选。后端代码中主要引用模块和主要语句如下：
+search=request.GET['search']  
+categ=request.GET['category']  
+users=None  
+articles=None  
+if categ=='用户':  
+&emsp;&emsp;if search:  
+&emsp;&emsp;&emsp;&emsp;users=User.objects.filter(username__icontains=search)  
+&emsp;&emsp;&emsp;&emsp;print(users)  
+elif categ=='文章':  
+&emsp;&emsp;if search:  
+&emsp;&emsp;&emsp;&emsp;articles=MARTICLE.objects.filter(title__icontains=search)  
+result={'users':users,'articles':articles}  
+
+### **4.1.3** 文章功能模块
+
+&emsp;&emsp;用户进入网站后首先看到已经审核通过的文章列表，点击相应的条目后进入文章内容，并且可以对自己的文章或者他人的添加评论。文章的详细内容界面如下图4.3所示。同时在主页可以创建新的文章，进入个人中心后可以对文章内容进行修改，或者删除文章和删除评论。个人中心我的界面如下图4.4所示。
+
+![avatar](/photo/文章查看界面（4.3）.png)
+
+**<center><font size=2>图 4.3 文章查看界面图</font></center>**
+
+![avatar](/photo/我的文章编辑界面（4.4）.png)
+
+**<center><font size=2>图 4.4 我的文章编辑界面图</font></center>**
+
+
+
