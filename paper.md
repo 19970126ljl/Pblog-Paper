@@ -197,5 +197,33 @@
 
 # <center>第 4 章网站功能模块的详细设计与开发</center>
 
+## **4.1** 普通用户功能模块介绍
 
+&emsp;&emsp;普通用户功能模块主要是普通用户的客户端操作界面，主要由一下六大部分组成，分别是用户登陆注册模块，搜索和分类筛选模块，文章功能模块，留言功能模块，相册图片模块和聊天模块。
 
+### **4.1.1** 用户登陆注册模块
+
+&emsp;&emsp;登陆注册功能是一个确保用户体验和保证用户个人信息隐私安全的基础模块。网站中有登陆界面和注册界面来引导用户进行登陆和注册。
+
+&emsp;&emsp;本网站的用户是扩展了django.contrib.auth.models中原有的用户User模型，注册时使用的表单也是调用了django.contrib.auth.forms中的UserCreationForm的表单对象。用户输入的信息正确与否都由后端Django的库函数regform.is_valid()进行判断。后端代码中主要引用模块和主要调用语句如下：
+
+from django.contrib.auth.models import User
+
+from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib.auth import authenticate,login
+
+def mregister(request):  
+&emsp;&emsp;if request.method =='POST':  
+&emsp;&emsp;&emsp;&emsp;regform = UserCreationForm(request.POST)  
+&emsp;&emsp;&emsp;&emsp;if regform.is_valid():  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;regform.save()  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;user = authenticate(username=regform.cleaned_data['username'],password=regform.cleaned_data['password1'])  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;login(request,user)  
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;return redirect('pblog:home')  
+&emsp;&emsp;else:  
+&emsp;&emsp;&emsp;&emsp;regform = UserCreationForm()  
+&emsp;&emsp;content = {'regform':regform}  
+&emsp;&emsp;return render(request,'pblog/register.html',content)   
+
+&emsp;&emsp;登陆时根据传到后端的用户输入的用户名和密码，调用Django的django.contrib.auth模块中的函数authenticate来验证用户是否存在，该函数返回一个user对象user = authenticate(request,username=request.POST['username'],password=request.POST['password'])
