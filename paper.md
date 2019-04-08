@@ -389,3 +389,7 @@ return render(request,'pblog/adminuserinfo.html',{'muser':user})
 &emsp;&emsp;围绕这研究的主题，文本简要列举了开发网站的相关技术如Django框架，ORM对象关系映射，Django-templates模板引擎，SQlite数据库管理系统和支持websocket的Django-channels插件。接着对网站进行需求分析和总体设计，在完成需求分析的基础上对网站进行总体设计和详细设计。最后对网站进行测试，保证保证的质量与健壮性。
 
 &emsp;&emsp;本次个人网站的所有开发都有本人一人完成，网站仍然存在许多小的瑕疵，但是基本的核心功能都已经完成，可以算作是一个合格的个人网站。并且在网站的开发过程中学习了python与Django的使用，加深了对python语言的理解。整个网站需要完善的地方将在下一阶段的研究中进行完善。
+
+# <center>致谢</center>
+
+&emsp;&emsp;十分感谢彭彬老师在毕设开题时的建议，在写论文和制作系统时的指导。感谢学校提供了一个良好的学习环境。感觉Django开源项目与python开源项目的提供者。感谢家人一直以来的支持。
