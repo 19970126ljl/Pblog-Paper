@@ -40,3 +40,9 @@ https://bookdown.org/wshuyi/intro-to-scientific-writings/lit-analysis.html#explo
 2.2管理员搜索模块
 2.3文章管理模块
 2.4用户管理模块
+
+系统测试
+1.测试原则
+2.测试用例与结果
+
+结论
